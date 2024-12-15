@@ -11,12 +11,5 @@ class IsAdmin(BaseFilter):
         users = await get_all_users()
         if users is None:
             return False
-
-        user_id = None
-
-        if isinstance(obj, types.Message):
-            user_id = obj.from_user.id
-        elif isinstance(obj, types.CallbackQuery):
-            user_id = obj.from_user.id
-
+        user_id = obj.from_user.id
         return user_id in [user.userid for user in users if user.is_admin]

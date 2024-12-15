@@ -12,11 +12,11 @@ async def cancel_msg(msg: types.Message, state: FSMContext):
     st = await state.get_state()
     if st is not None:
         await msg.answer(
-            text="❌ Операция отменена!", reply_markup=await back_menu_kb()
+            text="Операция отменена!", reply_markup=await back_menu_kb()
         )
         await state.clear()
     else:
-        await msg.answer(text="❕ Нечего отменять", reply_markup=await back_menu_kb())
+        await msg.answer(text="Нечего отменять!", reply_markup=await back_menu_kb())
 
 
 @router.callback_query(F.data == "cancel")
@@ -24,8 +24,8 @@ async def cancel_cb(call: types.CallbackQuery, state: FSMContext):
     st = await state.get_state()
     if st is not None:
         await call.message.edit_text(
-            text="❌ Операция отменена!", reply_markup=await back_menu_kb()
+            text="Операция отменена!", reply_markup=await back_menu_kb()
         )
         await state.clear()
     else:
-        await call.answer(text="❕ Нечего отменять", show_alert=True)
+        await call.answer(text="Нечего отменять!", show_alert=True)

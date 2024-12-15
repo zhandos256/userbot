@@ -19,5 +19,5 @@ async def menu_cb_handler(call: types.CallbackQuery):
     else:
         await update_user_lang(userid=call.from_user.id, value="ru")
     await call.message.edit_text(
-        text="✅ Язык интерфейса обновлен", reply_markup=await back_menu_kb()
+        text="Язык интерфейса обновлен!", reply_markup=await back_menu_kb()
     )

@@ -6,3 +6,6 @@ venv
 *.sqlite
 .vscode
 .DS_Store
+__pycache__
+versions
+locales
