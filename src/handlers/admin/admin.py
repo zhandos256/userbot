@@ -8,7 +8,7 @@ router = Router()
 
 @router.message(IsAdmin(), Command("admin"))
 async def admin_msg_handler(msg: types.Message):
-    template = [
+    template_msg = [
         "Админ панель\n",
     ]
-    await msg.answer(text="\n".join(template), reply_markup=None)
+    await msg.answer(text="\n".join(template_msg), reply_markup=None)

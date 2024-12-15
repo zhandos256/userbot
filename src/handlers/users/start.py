@@ -15,9 +15,9 @@ async def start_msg_handler(msg: types.Message):
         first_name=msg.from_user.first_name,
         last_name=msg.from_user.last_name,
     )
-    templtae = [
+    template_msg = [
         "Шаблонное приветствие\n",
         "Поменяй меня на другой текст\n",
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
     ]
-    await msg.answer(text="\n".join(templtae), reply_markup=await menu_kb())
+    await msg.answer(text="\n".join(template_msg), reply_markup=await menu_kb())
