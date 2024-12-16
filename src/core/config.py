@@ -4,11 +4,10 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.enums.parse_mode import ParseMode
 
-from core.const import BOT_TOKEN, DEBUG, LOG_FILE
+from core.const import BOT_TOKEN, DEBUG, LOG_FILE, BOT_COMMANDS
 from handlers.admin import admin
 from handlers.users import about, cancel, echo, help, lang, menu, settings, start
 from middleware.I18nMiddleware import i18n_middleware
-from misc.bot_commands import set_bot_commands
 from misc.notify import notify_admins
 
 
@@ -37,7 +36,7 @@ async def configure():
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
     dp.update.middleware.register(i18n_middleware)
-    await set_bot_commands(bot=bot)
+    await bot.set_my_commands(commands=BOT_COMMANDS)
     await bot.delete_webhook(drop_pending_updates=True)
     try:
         await dp.start_polling(bot)
