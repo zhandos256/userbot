@@ -4,7 +4,7 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.enums.parse_mode import ParseMode
 
-from core.const import BOT_TOKEN, DEBUG
+from core.const import BOT_TOKEN, DEBUG, LOG_FILE
 from handlers.admin import admin
 from handlers.users import about, cancel, echo, help, lang, menu, settings, start
 from middleware.I18nMiddleware import i18n_middleware
@@ -50,6 +50,8 @@ async def configure():
 
 def main():
     logging.basicConfig(
+        filename=LOG_FILE,
+        filemode='a',
         level=logging.INFO if not DEBUG else logging.DEBUG
     )
     asyncio.run(configure())
