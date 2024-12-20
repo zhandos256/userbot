@@ -26,14 +26,14 @@ async def register_user(
 ):
     async with async_session_maker() as session:
         # Check user if existing
-        query = select(User).filter_by(userid=userid)
+        query = select(User).filter_by(tg_userid=userid)
         result = await session.execute(query)
         exist_user = result.scalar_one_or_none()
         if exist_user:
             return
 
         new_user = User(
-            userid=userid,
+            tg_userid=userid,
             username=username if username else "-",
             first_name=first_name if first_name else "-",
             last_name=last_name if last_name else "-",
@@ -44,7 +44,7 @@ async def register_user(
 
 async def get_user_lang(userid: int):
     async with async_session_maker() as session:
-        query = select(User).filter_by(userid=userid)
+        query = select(User).filter_by(tg_userid=userid)
         result = await session.execute(query)
         user = result.scalar_one_or_none()
         if not user:
@@ -54,7 +54,7 @@ async def get_user_lang(userid: int):
 
 async def update_user_lang(userid: int, value: str):
     async with async_session_maker() as session:
-        query = select(User).filter_by(userid=userid)
+        query = select(User).filter_by(tg_userid=userid)
         result = await session.execute(query)
         user = result.scalar_one_or_none()
         if not user:
