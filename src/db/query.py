@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlalchemy import select
 
 from db.config import async_session_maker, engine
@@ -17,7 +19,10 @@ async def get_all_users():
 
 
 async def register_user(
-    userid: int, username: str = None, first_name: str = None, last_name: str = None
+    userid: int,
+    username: Optional[str] = None,
+    first_name: Optional[str] = None,
+    last_name: Optional[str] = None
 ):
     async with async_session_maker() as session:
         # Check user if existing

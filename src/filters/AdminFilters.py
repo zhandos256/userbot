@@ -12,4 +12,4 @@ class IsAdmin(BaseFilter):
         if users is None:
             return False
         user_id = obj.from_user.id
-        return user_id in [user.userid for user in users if user.is_admin]
+        return user_id in [user.tg_userid for user in users if user.is_admin]
