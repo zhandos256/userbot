@@ -4,9 +4,10 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.enums.parse_mode import ParseMode
 
-from core.const import BOT_TOKEN, DEBUG, LOG_FILE, BOT_COMMANDS
+from core.const import BOT_COMMANDS, BOT_TOKEN, DEBUG, LOG_FILE
 from handlers.admin import admin
-from handlers.users import about, cancel, echo, help, lang, menu, settings, start
+from handlers.users import (about, cancel, echo, help, lang, menu, settings,
+                            start)
 from middleware.I18nMiddleware import i18n_middleware
 from misc.notify import notify_admins
 
@@ -20,7 +21,8 @@ async def on_shutdown(bot: Bot):
 
 
 async def configure():
-    bot = Bot(token=BOT_TOKEN if BOT_TOKEN else "define me!", parse_mode=ParseMode.HTML)
+    bot = Bot(token=BOT_TOKEN if BOT_TOKEN else "define me!",
+              parse_mode=ParseMode.HTML)
     dp = Dispatcher()
     dp.include_routers(
         start.router,
@@ -48,9 +50,14 @@ async def configure():
 
 
 def main():
-    logging.basicConfig(
-        filename=LOG_FILE,
-        filemode='a',
-        level=logging.INFO if not DEBUG else logging.DEBUG
-    )
+    if not DEBUG:
+        logging.basicConfig(
+            filename=LOG_FILE,
+            filemode='a',
+            level=logging.INFO
+        )
+    else:
+        logging.basicConfig(
+            level=logging.DEBUG
+        )
     asyncio.run(configure())

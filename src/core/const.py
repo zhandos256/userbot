@@ -1,10 +1,11 @@
 from datetime import datetime
 from os import getenv
+from sys import argv
 from pathlib import Path
 
 from aiogram.types import BotCommand
 
-DEBUG = 0
+DEBUG = bool(int(argv[1][-1]))
 
 BOT_TOKEN = getenv("DEFINE ME!")
 
