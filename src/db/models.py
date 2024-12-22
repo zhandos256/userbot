@@ -1,17 +1,17 @@
 from datetime import datetime
 
 from sqlalchemy import BigInteger, Boolean, DateTime, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 
-from db.config import Base
+
+class Base(DeclarativeBase):
+    pass
 
 
 class User(Base):
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(
-        Integer, primary_key=True, autoincrement=True, index=True
-    )
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     created: Mapped[datetime] = mapped_column(DateTime, default=datetime.today())
     tg_userid: Mapped[int] = mapped_column(BigInteger, unique=True)
     username: Mapped[str] = mapped_column(String(length=32), default="-")

@@ -2,13 +2,8 @@ from typing import Optional
 
 from sqlalchemy import select
 
-from db.config import async_session_maker, engine
-from db.models import Base, User
-
-
-async def init_db():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+from db.config import async_session_maker
+from db.models import User
 
 
 async def get_all_users():
@@ -47,9 +42,7 @@ async def get_user_lang(userid: int):
         query = select(User).filter_by(tg_userid=userid)
         result = await session.execute(query)
         user = result.scalar_one_or_none()
-        if not user:
-            return
-        return user.language
+        return user.language if user else None
 
 
 async def update_user_lang(userid: int, value: str):
@@ -57,7 +50,7 @@ async def update_user_lang(userid: int, value: str):
         query = select(User).filter_by(tg_userid=userid)
         result = await session.execute(query)
         user = result.scalar_one_or_none()
-        if not user:
+        if user:
             return
-        user.language = value
-        await session.commit()
+            user.language = value
+            await session.commit()
