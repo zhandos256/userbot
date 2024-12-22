@@ -10,5 +10,5 @@ mkdir src/locales
 
 cd src
 
-alembic revision -m "initial"
+alembic revision --autogenerate -m "initial"
 alembic upgrade head
