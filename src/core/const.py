@@ -7,7 +7,7 @@ from aiogram.types import BotCommand
 
 DEBUG = bool(int(argv[1][-1]))
 
-BOT_TOKEN = getenv("DEFINE ME!")
+BOT_TOKEN = getenv("BOT_TOKEN", "define me!")
 
 BASE_DIR = Path(__file__).parent.parent
 LOGS_DIR = BASE_DIR / 'logs'
