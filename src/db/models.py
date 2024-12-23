@@ -12,7 +12,7 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    created: Mapped[datetime] = mapped_column(DateTime, default=datetime.today())
+    created: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
     tg_userid: Mapped[int] = mapped_column(BigInteger, unique=True)
     username: Mapped[str] = mapped_column(String(length=32), default="-", nullable=True)
     first_name: Mapped[str] = mapped_column(String(length=255), default="-", nullable=True)
