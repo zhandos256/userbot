@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import sys
 
 from aiogram import Bot, Dispatcher
 from aiogram.enums.parse_mode import ParseMode
@@ -50,13 +51,7 @@ async def configure():
 
 def main():
     if not DEBUG:
-        logging.basicConfig(
-            filename=LOG_FILE,
-            filemode='a',
-            level=logging.INFO
-        )
+        logging.basicConfig(filename=LOG_FILE, filemode='a', level=logging.INFO)
     else:
-        logging.basicConfig(
-            level=logging.DEBUG
-        )
+        logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     asyncio.run(configure())

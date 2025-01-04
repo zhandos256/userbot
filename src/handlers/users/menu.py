@@ -13,7 +13,7 @@ async def menu_msg(msg: types.Message):
         "Поменяй меня на другой текст\n",
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
     ]
-    await msg.answer(text="\n".join(template_msg), reply_markup=await menu_kb())
+    await msg.answer(text="\n".join(template_msg), reply_markup=menu_kb())
 
 
 @router.callback_query(F.data == "menu")
@@ -23,4 +23,4 @@ async def menu_cb(call: types.CallbackQuery):
         "Поменяй меня на другой текст\n",
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
     ]
-    await call.message.edit_text(text="\n".join(template_msg), reply_markup=await menu_kb())
+    await call.message.edit_text(text="\n".join(template_msg), reply_markup=menu_kb())

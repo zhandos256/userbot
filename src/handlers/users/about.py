@@ -13,5 +13,5 @@ async def about(call: types.CallbackQuery):
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
     ]
     await call.message.edit_text(
-        text="\n".join(template_msg), reply_markup=await back_menu_kb()
+        text="\n".join(template_msg), reply_markup=back_menu_kb()
     )

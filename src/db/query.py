@@ -13,11 +13,19 @@ async def get_all_users():
         return resutl.scalars().all()
 
 
+async def exist_user(tg_userid: int):
+    async with async_session_maker() as session:
+        query = select(User).filter_by(tg_userid=tg_userid)
+        result = await session.execute(query)
+        return True if result else False
+
+
 async def register_user(
     userid: int,
     username: Optional[str] = None,
     first_name: Optional[str] = None,
-    last_name: Optional[str] = None
+    last_name: Optional[str] = None,
+    language: str = "ru"
 ):
     async with async_session_maker() as session:
         # Check user if existing
@@ -32,6 +40,7 @@ async def register_user(
             username=username if username else "-",
             first_name=first_name if first_name else "-",
             last_name=last_name if last_name else "-",
+            language=language
         )
         session.add(new_user)
         await session.commit()
@@ -39,10 +48,10 @@ async def register_user(
 
 async def get_user_lang(userid: int):
     async with async_session_maker() as session:
-        query = select(User).filter_by(tg_userid=userid)
+        query = select(User.language).filter_by(tg_userid=userid)
         result = await session.execute(query)
-        user = result.scalar_one_or_none()
-        return user.language if user else None
+        language = result.scalar_one_or_none()
+        return language
 
 
 async def update_user_lang(userid: int, value: str):
@@ -50,7 +59,5 @@ async def update_user_lang(userid: int, value: str):
         query = select(User).filter_by(tg_userid=userid)
         result = await session.execute(query)
         user = result.scalar_one_or_none()
-        if user:
-            return
-            user.language = value
-            await session.commit()
+        user.language = value
+        await session.commit()

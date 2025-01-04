@@ -1,23 +1,22 @@
 from aiogram import Router, types
 from aiogram.filters import Command
 
-from db.query import register_user
+from db.query import exist_user
 from keyboards.inline.menu import menu_kb
+from keyboards.inline.lang import start_lang_kb
 
 router = Router()
 
 
 @router.message(Command("start"))
 async def start_msg_handler(msg: types.Message):
-    await register_user(
-        userid=msg.from_user.id,
-        username=msg.from_user.username,
-        first_name=msg.from_user.first_name,
-        last_name=msg.from_user.last_name,
-    )
-    template_msg = [
-        "Шаблонное приветствие\n",
-        "Поменяй меня на другой текст\n",
-        "Исходники - https://github.com/zhandos256/templateaiogram\n",
-    ]
-    await msg.answer(text="\n".join(template_msg), reply_markup=await menu_kb())
+    user = await exist_user(tg_userid=msg.from_user.id)
+    if not user:
+        await msg.answer(text='Выберите язык интерфейса', reply_markup=start_lang_kb())
+    else:
+        template_msg = [
+            "Шаблонное приветствие\n",
+            "Поменяй меня на другой текст\n",
+            "Исходники - https://github.com/zhandos256/templateaiogram\n",
+        ]
+        await msg.answer(text="\n".join(template_msg), reply_markup=menu_kb())
