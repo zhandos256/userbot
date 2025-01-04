@@ -15,4 +15,4 @@ async def echo_msg(msg: types.Message, state: FSMContext):
         template_msg = [
             "Извините, я не смог понять ваше сообщение. Используйте команду /help, чтобы увидеть доступные команды.",
         ]
-        await msg.answer(text="\n".join(template_msg), reply_markup=await back_menu_kb())
+        await msg.answer(text="\n".join(template_msg), reply_markup=back_menu_kb())

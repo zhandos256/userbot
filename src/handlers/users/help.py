@@ -13,7 +13,7 @@ async def help_msg(msg: types.Message):
         "Поменяй меня на другой текст\n",
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
     ]
-    await msg.answer(text="\n".join(template_msg), reply_markup=await back_menu_kb())
+    await msg.answer(text="\n".join(template_msg), reply_markup=back_menu_kb())
 
 
 @router.callback_query(F.data == "help_callback_data")
@@ -25,5 +25,5 @@ async def help_cb(call: types.CallbackQuery):
         "/start - Меню",
     ]
     await call.message.edit_text(
-        text="\n".join(template_msg), reply_markup=await back_menu_kb()
+        text="\n".join(template_msg), reply_markup=back_menu_kb()
     )
