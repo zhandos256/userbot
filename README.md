@@ -1,7 +1,7 @@
 #  Aiogram 3.1.1 template
 
 ## Dependencies
-  - **Aiogram** 
+  - **Aiogram** 3.1.1 version 
   - **SQLAlchemy** orm mapped query
   - **AioSQLite** sqlite async driver
   - **Alembic** db migrations
