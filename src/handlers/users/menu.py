@@ -10,7 +10,6 @@ router = Router()
 async def menu_msg(msg: types.Message):
     template_msg = [
         "Шаблонное приветствие\n",
-        "Поменяй меня на другой текст\n",
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
     ]
     await msg.answer(text="\n".join(template_msg), reply_markup=menu_kb())
@@ -20,7 +19,6 @@ async def menu_msg(msg: types.Message):
 async def menu_cb(call: types.CallbackQuery):
     template_msg = [
         "Шаблонное приветствие\n",
-        "Поменяй меня на другой текст\n",
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
     ]
     await call.message.edit_text(text="\n".join(template_msg), reply_markup=menu_kb())

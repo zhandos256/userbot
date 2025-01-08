@@ -10,7 +10,6 @@ router = Router()
 async def help_msg(msg: types.Message):
     template_msg = [
         "Шаблонное приветствие\n",
-        "Поменяй меня на другой текст\n",
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
     ]
     await msg.answer(text="\n".join(template_msg), reply_markup=back_menu_kb())

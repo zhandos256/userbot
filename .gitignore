@@ -1,11 +1,29 @@
+# .env files
 .env
-env
-venv
+
+# Environment directories
+env/
+venv/
+
+# Temporary files
 *.tmp
 *.log
+
+# SQLite database files
 *.sqlite
-.vscode
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# macOS system files
 .DS_Store
-__pycache__
-versions
-locales
+
+# Python cache files
+__pycache__/
+
+# Versioning directories
+versions/
+
+# Localization files
+locales/

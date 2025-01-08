@@ -40,7 +40,6 @@ async def update_lang_kk_start(call: types.CallbackQuery):
     )
     template_msg = [
         "Шаблонное приветствие\n",
-        "Поменяй меня на другой текст\n",
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
     ]
     await call.message.edit_text(
@@ -59,7 +58,6 @@ async def update_lang_ru_start(call: types.CallbackQuery):
     )
     template_msg = [
         "Шаблонное приветствие\n",
-        "Поменяй меня на другой текст\n",
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
     ]
     await call.message.edit_text(
