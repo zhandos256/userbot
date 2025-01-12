@@ -1,29 +1,43 @@
-# .env files
-.env
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# Environment directories
+# Virtual environments
 env/
 venv/
+.venv/
 
-# Temporary files
-*.tmp
-*.log
-
-# SQLite database files
-*.sqlite
+# .env files
+.env
+.venv
 
 # IDE/editor files
 .vscode/
 .idea/
+*.sublime-workspace
+*.sublime-project
+*.emacs
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+*.swp
+*.swo
+
+# SQLite database files
+*.sqlite
+*.db
 
 # macOS system files
 .DS_Store
+Thumbs.db
 
-# Python cache files
-__pycache__/
+# Docker-related files
+.dockerignore
+docker-compose.override.yml
 
-# Versioning directories
+# Version control directories
 versions/
-
-# Localization files
-locales/
