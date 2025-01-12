@@ -1,0 +1,20 @@
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bot_container
+    environment:
+      - BOT_TOKEN=YOUR_BOT_TOKEN
+      - DB_URL=postgresql+asyncpg://postgres:postgres@postgres:5432/postgres
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:12-alpine
+    container_name: db_container
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres

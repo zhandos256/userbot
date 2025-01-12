@@ -1,36 +1,33 @@
-#  Aiogram 3.1.1 template
+# Aiogram 3.1.1 template
 
 ## Dependencies
-  - **Aiogram** 3.1.1 version 
-  - **SQLAlchemy** orm mapped query
-  - **AioSQLite** sqlite async driver
-  - **Alembic** db migrations
-  - **Babel** localization
+
+- **Aiogram** - 3.1.1 version
+- **SQLAlchemy** - Orm mapped query
+- **Asyncpg** - Postgres async driver
+- **Alembic** - Database migrations
+- **Babel** - I18n localization
 
 ## Requirements
 
 Python 3.8 or higher
 
-## Install
+## Close repo
 
 ```bash
 git clone https://github.com/zhandos256/templateaiogram
 cd templateaiogram
-sudo chmod +x init.sh run.sh
-source ./init.sh
 ```
 
-## Export bot token to your env (.zshrc or bashrc) or windows
+Get your real token from @Botfaterh and insert your token into docker-compose.yml:
 
 ```bash
-export BOT_TOKEN="YOUR_BOT_TOKEN"
+environment:
+  - BOT_TOKEN=YOUR_BOT_TOKEN
 ```
-Get your real bol token from @Botfather
 
-## Run
+## Build and start
+
 ```bash
-source ./run.sh
+docker-compose build && docker-compose up
 ```
-
-## License MIT
-MIT
