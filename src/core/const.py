@@ -11,8 +11,7 @@ BOT_TOKEN = getenv("BOT_TOKEN", "DEFINE ME!")
 BASE_DIR = Path(__file__).parent.parent
 LOGS_DIR = BASE_DIR / 'logs'
 LOG_FILE = LOGS_DIR / f"{datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.log"
-DB_FILE_PATH = BASE_DIR / "db.sqlite"
-DB_URL = f"sqlite+aiosqlite:///{DB_FILE_PATH}"
+DB_URL = getenv("DB_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres")
 LOCALES_DIR = BASE_DIR / "locales"
 
 BOT_COMMANDS = [

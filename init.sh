@@ -1,14 +1,17 @@
 #!/bin/bash
 
-/usr/bin/python3 -m venv .env
-. ./.env/bin/activate
+# Создание необходимых директорий
+mkdir -p src/migrations/versions src/locales src/logs
 
-pip install -U pip && pip install -r requirements.txt
 
-mkdir src/migrations/versions
-mkdir src/locales
-
+# Переход в директорию src
 cd src
 
-alembic revision --autogenerate -m "initial"
-alembic upgrade head
+# Проверка наличия файлов .py в директории migrations/versions
+if ls migrations/versions/*.py 1>/dev/null 2>&1; then
+    echo "Миграции уже существуют, пропускаем создание новой."
+else
+    # Если миграций нет, создаем новую
+    alembic revision --autogenerate -m "initial"
+    alembic upgrade head
+fi
