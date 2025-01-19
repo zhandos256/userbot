@@ -1,4 +1,5 @@
 services:
+
   bot:
     build:
       context: .
@@ -9,8 +10,9 @@ services:
       - DB_URL=postgresql+asyncpg://postgres:postgres@postgres:5432/postgres
     depends_on:
       - postgres
+
   postgres:
-    image: postgres:12-alpine
+    image: postgres
     container_name: db_container
     ports:
       - "5432:5432"
