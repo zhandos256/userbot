@@ -7,7 +7,7 @@ services:
     container_name: bot_container
     environment:
       - BOT_TOKEN=YOUR_BOT_TOKEN
-      - DB_URL=postgresql+asyncpg://postgres:postgres@postgres:5432/postgres
+      - POSTGRES_DB_URL=postgresql+asyncpg://postgres:postgres@postgres:5432/postgres
     depends_on:
       - postgres
 

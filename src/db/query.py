@@ -1,23 +1,32 @@
+from datetime import datetime
 from typing import Optional
 
 from sqlalchemy import select
 
 from db.config import async_session_maker
+from core.const import TIMEZONE
 from db.models import User
+
+
+async def update_last_action(tg_userid: int):
+    async with async_session_maker() as session:
+        result = await session.execute(select(User).filter_by(tg_userid=tg_userid))
+        user = result.scalar_one_or_none()
+        if user:
+            user.last_update = datetime.now(TIMEZONE)
+            await session.commit()
 
 
 async def get_all_users():
     async with async_session_maker() as session:
-        query = select(User)
-        resutl = await session.execute(query)
-        return resutl.scalars().all()
+        result = await session.execute(select(User))
+        return result.scalars().all()
 
 
 async def exist_user(tg_userid: int):
     async with async_session_maker() as session:
-        query = select(User).filter_by(tg_userid=tg_userid)
-        result = await session.execute(query)
-        return True if result else False
+        user = await session.execute(select(User).filter_by(tg_userid=tg_userid))
+        return True if user.scalar_one_or_none() else False
 
 
 async def register_user(
@@ -29,12 +38,10 @@ async def register_user(
 ):
     async with async_session_maker() as session:
         # Check user if existing
-        query = select(User).filter_by(tg_userid=userid)
-        result = await session.execute(query)
+        result = await session.execute(select(User).filter_by(tg_userid=userid))
         exist_user = result.scalar_one_or_none()
         if exist_user:
             return
-
         new_user = User(
             tg_userid=userid,
             username=username if username else "-",
@@ -46,18 +53,16 @@ async def register_user(
         await session.commit()
 
 
-async def get_user_lang(userid: int):
+async def get_user_lang(tg_userid: int):
     async with async_session_maker() as session:
-        query = select(User.language).filter_by(tg_userid=userid)
-        result = await session.execute(query)
-        language = result.scalar_one_or_none()
-        return language
+        result = await session.execute(select(User.language).filter_by(tg_userid=tg_userid))
+        return result.scalar_one_or_none()
 
 
 async def update_user_lang(userid: int, value: str):
     async with async_session_maker() as session:
-        query = select(User).filter_by(tg_userid=userid)
-        result = await session.execute(query)
+        result = await session.execute(select(User).filter_by(tg_userid=userid))
         user = result.scalar_one_or_none()
-        user.language = value
-        await session.commit()
+        if user:
+            user.language = value
+            await session.commit()

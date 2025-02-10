@@ -5,6 +5,7 @@
 - **Aiogram** - 3.1.1 version
 - **SQLAlchemy** - Orm mapped query
 - **Asyncpg** - Postgres async driver
+- **Aiosqlite** - Sqlite async driver
 - **Alembic** - Database migrations
 - **Babel** - I18n localization
 
@@ -26,7 +27,7 @@ environment:
   - BOT_TOKEN=YOUR_BOT_TOKEN
 ```
 
-## Build and start
+## Build and up
 
 ```bash
 docker-compose build && docker-compose up
