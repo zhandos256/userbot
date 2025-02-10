@@ -1,4 +1,4 @@
-from aiogram import F, Router, types
+from aiogram import Router, types
 from aiogram.filters import CommandStart
 
 from db.query import exist_user
@@ -6,7 +6,6 @@ from keyboards.inline.lang import start_lang_kb
 from keyboards.inline.menu import menu_kb
 
 router = Router()
-router.message.filter(F.chat.type == "private")
 
 
 @router.message(CommandStart())

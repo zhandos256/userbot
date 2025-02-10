@@ -6,14 +6,24 @@ from aiogram import Bot, Dispatcher
 from aiogram.enums.parse_mode import ParseMode
 
 from core.const import BOT_COMMANDS, BOT_TOKEN, DEBUG, LOG_FILE
-from handlers.admin import admin
-from handlers.users import (about, cancel, echo, help, lang, menu, settings,
-                            start)
+from db.query import async_session_maker
+from handlers.admin.admin import router as admin_router
+from handlers.users.start import router as start_router
+from handlers.users.help import router as help_router
+from handlers.users.about import router as about_router
+from handlers.users.lang import router as lang_router
+from handlers.users.cancel import router as cancel_router
+from handlers.users.echo import router as echo_router
+from handlers.users.menu import router as menu_router
+from handlers.users.settings import router as settings_router
 from middleware.I18nMiddleware import i18n_middleware
+from middleware.LastAction import LastActionMiddleware
 from misc.notify import notify_admins
 
 
 async def on_startup(bot: Bot):
+    await bot.set_my_commands(commands=BOT_COMMANDS)
+    await bot.delete_webhook(drop_pending_updates=True)
     await notify_admins(bot=bot, text="Бот запущен!")
 
 
@@ -21,27 +31,26 @@ async def on_shutdown(bot: Bot):
     await notify_admins(bot=bot, text="Бот остановлен!")
 
 
-async def configure():
+async def configure_bot():
     bot = Bot(token=BOT_TOKEN, parse_mode=ParseMode.HTML)
     dp = Dispatcher()
     dp.include_routers(
-        start.router,
-        help.router,
-        menu.router,
-        settings.router,
-        about.router,
-        lang.router,
-        admin.router,
-        cancel.router,
-        echo.router,
+        cancel_router,
+        start_router,
+        help_router,
+        menu_router,
+        about_router,
+        settings_router,
+        lang_router,
+        admin_router,
+        echo_router,
     )
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
+    dp.update.middleware.register(LastActionMiddleware(async_session_maker))
     dp.update.middleware.register(i18n_middleware)
-    await bot.set_my_commands(commands=BOT_COMMANDS)
-    await bot.delete_webhook(drop_pending_updates=True)
     try:
-        await dp.start_polling(bot)
+        await dp.start_polling(bot, polling_timeout=5)
     except Exception as e:
         logging.exception(e)
     finally:
@@ -49,9 +58,22 @@ async def configure():
         await bot.session.close()
 
 
-def main():
-    if not DEBUG:
-        logging.basicConfig(filename=LOG_FILE, filemode='a', level=logging.INFO)
+def configure_logger():
+    log_format = "%(asctime)s - %(levelname)s - %(message)s"
+    datefmt = "%Y-%m-%d %H:%M:%S"
+    common_params = {
+        "level": logging.INFO,
+        "format": log_format,
+        "datefmt": datefmt,
+    }
+    if DEBUG:
+        common_params["stream"] = sys.stdout
     else:
-        logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-    asyncio.run(configure())
+        common_params["filename"] = LOG_FILE
+        common_params["filemode"] = "a"
+    logging.basicConfig(**common_params)
+
+
+def main():
+    configure_logger()
+    asyncio.run(configure_bot())

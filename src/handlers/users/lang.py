@@ -29,37 +29,20 @@ async def update_lang_ru(call: types.CallbackQuery):
     )
 
 
-@router.callback_query(F.data == 'kk_start')
-async def update_lang_kk_start(call: types.CallbackQuery):
+@router.callback_query(F.data.in_(["kk_start", "ru_start"]))
+async def update_lang_start(call: types.CallbackQuery):
+    lang = "kk" if call.data == "kk_start" else "ru"
     await register_user(
         userid=call.from_user.id,
         username=call.from_user.username,
         first_name=call.from_user.first_name,
         last_name=call.from_user.last_name,
-        language="kk"
+        language=lang
     )
-    template_msg = [
+    template_msg = (
         "Шаблонное приветствие\n",
         "Исходники - https://github.com/zhandos256/templateaiogram\n",
-    ]
-    await call.message.edit_text(
-        text="\n".join(template_msg), reply_markup=menu_kb()
     )
-
-
-@router.callback_query(F.data == 'ru_start')
-async def update_lang_ru_start(call: types.CallbackQuery):
-    await register_user(
-        userid=call.from_user.id,
-        username=call.from_user.username,
-        first_name=call.from_user.first_name,
-        last_name=call.from_user.last_name,
-        language="kk"
-    )
-    template_msg = [
-        "Шаблонное приветствие\n",
-        "Исходники - https://github.com/zhandos256/templateaiogram\n",
-    ]
     await call.message.edit_text(
         text="\n".join(template_msg), reply_markup=menu_kb()
     )

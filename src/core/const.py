@@ -2,17 +2,32 @@ from datetime import datetime
 from os import getenv
 from pathlib import Path
 
+import pytz
 from aiogram.types import BotCommand
 
-DEBUG = 0
+DEBUG = 1
+
+TIMEZONE = pytz.timezone("Asia/Almaty")
 
 BOT_TOKEN = getenv("BOT_TOKEN", "DEFINE ME!")
 
 BASE_DIR = Path(__file__).parent.parent
+
 LOGS_DIR = BASE_DIR / 'logs'
-LOG_FILE = LOGS_DIR / f"{datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.log"
-DB_URL = getenv("DB_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres")
+LOG_FILE = LOGS_DIR / f"{datetime.now(TIMEZONE).strftime('%Y-%m-%d')}.log"
+
+SQLITE_DB_FILE_PATH = BASE_DIR / "db.sqlite"
+SQLITE_DB_URL = f"sqlite+aiosqlite:///{SQLITE_DB_FILE_PATH}"
+
+# If you wanna use Postgres uncomment this and comment Sqlite and change in migrations/env.py file
+# POSTGRES_DB_URL = getenv(
+#     "POSTGRES_DB_URL",
+#     "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres"
+# )
+
 LOCALES_DIR = BASE_DIR / "locales"
+DOMAIN_MESSAGES = "messages"
+DEFAULT_LOCALE = 'ru'
 
 BOT_COMMANDS = [
     BotCommand(command="/start", description="Template start message"),
