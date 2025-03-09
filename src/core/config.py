@@ -4,7 +4,6 @@ import sys
 
 from aiogram import Bot, Dispatcher
 from aiogram.enums.parse_mode import ParseMode
-
 from core.const import BOT_COMMANDS, BOT_TOKEN, DEBUG, LOG_FILE
 from db.query import async_session_maker
 from handlers.admin.admin import router as admin_router
