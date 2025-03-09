@@ -19,7 +19,8 @@ LOG_FILE = LOGS_DIR / f"{datetime.now(TIMEZONE).strftime('%Y-%m-%d')}.log"
 SQLITE_DB_FILE_PATH = BASE_DIR / "db.sqlite"
 SQLITE_DB_URL = f"sqlite+aiosqlite:///{SQLITE_DB_FILE_PATH}"
 
-# If you wanna use Postgres uncomment this and comment Sqlite and change in migrations/env.py file
+# If you want use Postgres
+# replace SQLITE_DB_URL to this and in env.py
 # POSTGRES_DB_URL = getenv(
 #     "POSTGRES_DB_URL",
 #     "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres"
