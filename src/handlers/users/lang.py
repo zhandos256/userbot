@@ -15,7 +15,7 @@ async def lang_cb(call: types.CallbackQuery):
 
 @router.callback_query(F.data == 'kk')
 async def update_lang_kk(call: types.CallbackQuery):
-    await update_user_lang(userid=call.from_user.id, value="kk")
+    await update_user_lang(tg_userid=call.from_user.id, value="kk")
     await call.message.edit_text(
         text="Интерфейс тілі жаңартылды!", reply_markup=back_menu_kb()
     )
@@ -23,7 +23,7 @@ async def update_lang_kk(call: types.CallbackQuery):
 
 @router.callback_query(F.data == 'ru')
 async def update_lang_ru(call: types.CallbackQuery):
-    await update_user_lang(userid=call.from_user.id, value="ru")
+    await update_user_lang(tg_userid=call.from_user.id, value="ru")
     await call.message.edit_text(
         text="Язык интерфейса обновлен!", reply_markup=back_menu_kb()
     )
@@ -33,7 +33,7 @@ async def update_lang_ru(call: types.CallbackQuery):
 async def update_lang_start(call: types.CallbackQuery):
     lang = "kk" if call.data == "kk_start" else "ru"
     await register_user(
-        userid=call.from_user.id,
+        tg_userid=call.from_user.id,
         username=call.from_user.username,
         first_name=call.from_user.first_name,
         last_name=call.from_user.last_name,
