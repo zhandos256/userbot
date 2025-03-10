@@ -1,6 +1,6 @@
 from aiogram import F, Router, types
 
-from database.query import get_user_repository
+from database.query import register_user, update_user_lang
 from keyboards.inline.lang import lang_kb
 from keyboards.inline.menu import back_menu_kb, menu_kb
 
@@ -15,8 +15,7 @@ async def lang_cb(call: types.CallbackQuery):
 
 @router.callback_query(F.data == 'kk')
 async def update_lang_kk(call: types.CallbackQuery):
-    user_repo = await get_user_repository()
-    await user_repo.update_user_lang(tg_userid=call.from_user.id, value="kk")
+    await update_user_lang(tg_userid=call.from_user.id, value="kk")
     await call.message.edit_text(
         text="Интерфейс тілі жаңартылды!", reply_markup=back_menu_kb()
     )
@@ -24,8 +23,7 @@ async def update_lang_kk(call: types.CallbackQuery):
 
 @router.callback_query(F.data == 'ru')
 async def update_lang_ru(call: types.CallbackQuery):
-    user_repo = await get_user_repository()
-    await user_repo.update_user_lang(tg_userid=call.from_user.id, value="ru")
+    await update_user_lang(tg_userid=call.from_user.id, value="ru")
     await call.message.edit_text(
         text="Язык интерфейса обновлен!", reply_markup=back_menu_kb()
     )
@@ -34,8 +32,7 @@ async def update_lang_ru(call: types.CallbackQuery):
 @router.callback_query(F.data.in_(["kk_start", "ru_start"]))
 async def update_lang_start(call: types.CallbackQuery):
     lang = "kk" if call.data == "kk_start" else "ru"
-    user_repo = await get_user_repository()
-    await user_repo.register_user(
+    await register_user(
         tg_userid=call.from_user.id,
         username=call.from_user.username,
         first_name=call.from_user.first_name,
