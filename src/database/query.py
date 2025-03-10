@@ -2,45 +2,43 @@ from datetime import datetime
 from typing import Optional
 
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from config.const import TIMEZONE
 from .models import User
 from .session import async_session_maker
 
 
-class UserRepository():
-    def __init__(self, session: AsyncSession):
-        self.session = session
-
-    async def update_last_action(self, tg_userid: int):
-        result = await self.session.execute(select(User).filter(User.tg_userid == tg_userid))
+async def update_last_action(tg_userid: int):
+    async with async_session_maker() as session:
+        result = await session.execute(select(User).filter(User.tg_userid == tg_userid))
         user = result.scalar_one_or_none()
         if user:
             user.last_action = datetime.now(TIMEZONE)
-            await self.session.commit()
+            await session.commit()
 
 
-    async def get_all_users(self):
-        result = await self.session.execute(select(User))
+async def get_all_users():
+    async with async_session_maker() as session:
+        result = await session.execute(select(User))
         return result.scalars().all()
 
 
-    async def exist_user(self, tg_userid: int):
-        user = await self.session.execute(select(User).filter(User.tg_userid == tg_userid))
+async def exist_user(tg_userid: int):
+    async with async_session_maker() as session:
+        user = await session.execute(select(User).filter(User.tg_userid == tg_userid))
         return user.scalar_one_or_none() is not None
 
 
-    async def register_user(
-        self,
-        tg_userid: int,
-        username: Optional[str] = None,
-        first_name: Optional[str] = None,
-        last_name: Optional[str] = None,
-        language: str = "ru"
-    ):
+async def register_user(
+    tg_userid: int,
+    username: Optional[str] = None,
+    first_name: Optional[str] = None,
+    last_name: Optional[str] = None,
+    language: str = "ru"
+):
+    async with async_session_maker() as session:
         # Check user if existing
-        result = await self.session.execute(select(User).filter(User.tg_userid == tg_userid))
+        result = await session.execute(select(User).filter(User.tg_userid == tg_userid))
         exist_user = result.scalar_one_or_none()
         if exist_user:
             return
@@ -51,23 +49,20 @@ class UserRepository():
             last_name=last_name if last_name else "-",
             language=language
         )
-        self.session.add(new_user)
-        await self.session.commit()
+        session.add(new_user)
+        await session.commit()
 
 
-    async def get_user_lang(self, tg_userid: int):
-        result = await self.session.execute(select(User.language).filter(User.tg_userid == tg_userid))
+async def get_user_lang(tg_userid: int):
+    async with async_session_maker() as session:
+        result = await session.execute(select(User.language).filter(User.tg_userid == tg_userid))
         return result.scalar_one_or_none()
 
 
-    async def update_user_lang(self, tg_userid: int, value: str):
-        result = await self.session.execute(select(User).filter(User.tg_userid == tg_userid))
+async def update_user_lang(tg_userid: int, value: str):
+    async with async_session_maker() as session:
+        result = await session.execute(select(User).filter(User.tg_userid == tg_userid))
         user = result.scalar_one_or_none()
         if user:
             user.language = value
-            await self.session.commit()
-
-
-async def get_user_repository():
-    async with async_session_maker() as session:
-        return UserRepository(session=session)
+            await session.commit()

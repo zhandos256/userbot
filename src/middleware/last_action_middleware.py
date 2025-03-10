@@ -1,7 +1,7 @@
 from aiogram import BaseMiddleware
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from database.query import get_user_repository
+from database.query import update_last_action
 
 
 class LastActionMiddleware(BaseMiddleware):
@@ -13,6 +13,5 @@ class LastActionMiddleware(BaseMiddleware):
         # return await super().__call__(handler, event, data)
         user = data["event_from_user"]
         user_id = int(user.id)
-        user_repo = await get_user_repository()
-        await user_repo.update_last_action(tg_userid=user_id)
+        await update_last_action(tg_userid=user_id)
         return await handler(event, data)
