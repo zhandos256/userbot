@@ -1,34 +1,65 @@
-# Aiogram 3.1.1 template
+# Шаблон Aiogram 3.1.1
 
-## Dependencies
+Это современный шаблон для Telegram-бота, построенный на Aiogram 3.1.1, с поддержкой асинхронных баз данных, интернационализацией (i18n) и развертыванием через Docker. Шаблон предоставляет надежную основу для создания масштабируемых и поддерживаемых ботов с чистой архитектурой.
 
-- **Aiogram** - 3.1.1 version
-- **SQLAlchemy** - Orm mapped query
-- **Asyncpg** - Postgres async driver
-- **Aiosqlite** - Sqlite async driver
-- **Alembic** - Database migrations
-- **Babel** - I18n localization
+## Особенности
 
-## Requirements
+- Aiogram 3.1.1: Последняя стабильная версия фреймворка для Telegram-ботов.
+- Поддержка баз данных:
+  - SQLAlchemy: ORM для работы с запросами и миграциями.
+  - Asyncpg: Асинхронный драйвер для PostgreSQL.
+- Aiosqlite: Асинхронный драйвер для SQLite (по умолчанию для локальной разработки).
+- Alembic: Управление миграциями базы данных.
+- Babel: Поддержка интернационализации (i18n) и локализации.
+- Docker: Контейнеризация с помощью Dockerfile и docker-compose.yml.
+- Модульная структура: Организованные обработчики, фильтры, клавиатуры и middleware.
 
-Python 3.8 or higher
+## Требования
 
-## Close repo
+- Python: 3.8 или выше
+- Docker: Установлен для развертывания в контейнерах (опционально для локальной разработки)
+- Git: Для клонирования репозитория
 
-```bash
-git clone https://github.com/zhandos256/templateaiogram
-cd templateaiogram
+## Структура проекта
+
+```
+templateaiogram/
+├── Dockerfile             # Конфигурация Docker для сборки образа бота
+├── LICENSE                # Лицензия проекта
+├── README.md              # Этот файл
+├── docker-compose.yml     # Конфигурация Docker Compose для бота и базы данных
+├── requirements.txt       # Зависимости Python
+├── run.sh                 # Скрипт для запуска бота
+└── src/                   # Директория с исходным кодом
+    ├── alembic.ini        # Конфигурация Alembic для миграций
+    ├── config/            # Файлы конфигурации
+    │   ├── const.py       # Константы
+    │   ├── settings.py    # Настройки бота (например, BOT_TOKEN, URL базы)
+    ├── database/          # Модули для работы с базой данных
+    │   ├── models.py      # Модели SQLAlchemy
+    │   ├── query.py       # Запросы к базе данных
+    │   ├── session.py     # Управление сессиями базы данных
+    ├── db.sqlite          # База SQLite по умолчанию (для локальной разработки)
+    ├── filters/           # Пользовательские фильтры
+    │   ├── AdminFilters.py # Фильтры для админов
+    ├── handlers/          # Обработчики сообщений и callback-ов
+    │   ├── admin/         # Команды для админов
+    │   ├── users/         # Команды для пользователей (start, help, about и др.)
+    ├── keyboards/         # Inline и reply клавиатуры
+    │   ├── inline/        # Определения inline-клавиатур
+    ├── locales/           # Файлы локализации (i18n)
+    ├── logs/              # Файлы логов (если настроено)
+    ├── main.py            # Точка входа бота
+    ├── middleware/        # Пользовательские middleware
+    │   ├── i18n_middleware.py       # Middleware для локализации
+    │   ├── last_action_middleware.py # Отслеживание последнего действия
+    ├── migrations/        # Миграции Alembic
+    │   ├── versions/      # Скрипты миграций
+    └── utils/             # Вспомогательные функции
+        ├── bot_commands.py # Настройка команд бота
+        ├── notify.py       # Утилиты для уведомлений
 ```
 
-Get your real token from @Botfaterh and insert your token into docker-compose.yml:
+## Лицензия
 
-```bash
-environment:
-  - BOT_TOKEN=YOUR_BOT_TOKEN
-```
-
-## Build and up
-
-```bash
-docker-compose build && docker-compose up
-```
+Проект распространяется под лицензией MIT.
