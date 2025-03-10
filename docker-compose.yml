@@ -1,5 +1,6 @@
-services:
+version: "3.8"
 
+services:
   bot:
     build:
       context: .
@@ -12,7 +13,7 @@ services:
       - postgres
 
   postgres:
-    image: postgres
+    image: postgres:16
     container_name: db_container
     ports:
       - "5432:5432"
@@ -20,3 +21,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+  
+volumes:
+  pg_data:
