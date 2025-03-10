@@ -3,11 +3,12 @@ import logging
 
 from aiogram import Bot
 
-from db.query import get_all_users
+from database.query import get_user_repository
 
 
 async def notify_admins(bot: Bot, text: str):
-    users = await get_all_users()
+    user_repo = await get_user_repository()
+    users = await user_repo.get_all_users()
     if users is not None:
         for user in users:
             if user.is_admin:
@@ -19,7 +20,8 @@ async def notify_admins(bot: Bot, text: str):
 
 
 async def notify_users(bot: Bot, text: str):
-    users = await get_all_users()
+    user_repo = await get_user_repository()
+    users = await user_repo.get_all_users()
     if users is not None:
         for user in users:
             if not user.is_admin:

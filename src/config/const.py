@@ -1,15 +1,14 @@
-from datetime import datetime
 from os import getenv
 from pathlib import Path
+from datetime import datetime
 
 import pytz
-from aiogram.types import BotCommand
 
-DEBUG = 1
+DEBUG = 0
 
 TIMEZONE = pytz.timezone("Asia/Almaty")
 
-BOT_TOKEN = getenv("BOT_TOKEN", "DEFINE ME!")
+BOT_TOKEN = getenv("BOT_TOKEN", "define me!")
 
 BASE_DIR = Path(__file__).parent.parent
 
@@ -29,9 +28,3 @@ SQLITE_DB_URL = f"sqlite+aiosqlite:///{SQLITE_DB_FILE_PATH}"
 LOCALES_DIR = BASE_DIR / "locales"
 DOMAIN_MESSAGES = "messages"
 DEFAULT_LOCALE = 'ru'
-
-BOT_COMMANDS = [
-    BotCommand(command="/start", description="Template start message"),
-    BotCommand(command="/help", description="Template help message"),
-    BotCommand(command="/menu", description="Template menu message"),
-]

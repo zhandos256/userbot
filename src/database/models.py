@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import BigInteger, Boolean, DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 
-from core.const import TIMEZONE
+from config.const import TIMEZONE
 
 
 class Base(DeclarativeBase):
