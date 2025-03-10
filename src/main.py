@@ -1,4 +1,4 @@
-from core.config import main
+from config.settings import main
 
 if __name__ == "__main__":
     main()
