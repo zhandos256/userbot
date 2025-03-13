@@ -17,8 +17,10 @@ async def notify_users_by_condition(bot: Bot, text: str, is_admin: bool):
                 except Exception as e:
                     logging.exception(e)
 
+
 async def notify_admins(bot: Bot, text: str):
     await notify_users_by_condition(bot, text, is_admin=True)
+
 
 async def notify_users(bot: Bot, text: str):
     await notify_users_by_condition(bot, text, is_admin=False)
