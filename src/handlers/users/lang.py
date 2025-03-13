@@ -13,16 +13,13 @@ lang_message = {
 
 @router.callback_query(F.data == "lang")
 async def lang_cb(call: types.CallbackQuery):
-    await call.message.edit_text(
-        text="Язык интерфейса", reply_markup=lang_kb())
+    await call.message.edit_text(text="Язык интерфейса", reply_markup=lang_kb())
 
 
 @router.callback_query(F.data.in_(['kk', 'ru']))
 async def update_lang(call: types.CallbackQuery):
     await update_user_lang(tg_userid=call.from_user.id, value=call.data)
-    await call.message.edit_text(
-        text=lang_message[call.data], reply_markup=back_menu_kb()
-    )
+    await call.message.edit_text(text=lang_message[call.data], reply_markup=back_menu_kb())
 
 
 @router.callback_query(F.data.in_(["kk_start", "ru_start"]))

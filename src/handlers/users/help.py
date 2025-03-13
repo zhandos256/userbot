@@ -18,6 +18,4 @@ async def help_msg(msg: types.Message):
 
 @router.callback_query(F.data == "help_callback_data")
 async def help_cb(call: types.CallbackQuery):
-    await call.message.edit_text(
-        text="\n".join(tmp_msg), reply_markup=back_menu_kb()
-    )
+    await call.message.edit_text(text="\n".join(tmp_msg), reply_markup=back_menu_kb())
