@@ -14,8 +14,8 @@ async def start_msg_handler(msg: types.Message):
     if not user:
         await msg.answer(text='Выберите язык интерфейса', reply_markup=start_lang_kb())
     else:
-        template_msg = [
+        temp_msg = [
             "Шаблонное приветствие\n",
             "Исходники - https://github.com/zhandos256/templateaiogram\n",
         ]
-        await msg.answer(text="\n".join(template_msg), reply_markup=menu_kb())
+        await msg.answer(text="\n".join(temp_msg), reply_markup=menu_kb())

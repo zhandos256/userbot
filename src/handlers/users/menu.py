@@ -4,7 +4,6 @@ from aiogram.filters import Command
 from keyboards.inline.menu import menu_kb
 
 router = Router()
-
 tmp_msg = (
     "Шаблонное приветствие\n",
     "Исходники - https://github.com/zhandos256/templateaiogram\n",
