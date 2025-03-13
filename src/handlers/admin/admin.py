@@ -1,7 +1,7 @@
 from aiogram import Router, types
 from aiogram.filters import Command
 
-from filters.AdminFilters import IsAdmin
+from filters.admin_filter import IsAdmin
 
 router = Router()
 
