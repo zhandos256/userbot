@@ -22,8 +22,8 @@ from utils import bot_commands, notify
 
 
 async def on_startup(bot: Bot):
-    await bot_commands.set_bot_commands(bot=Bot)
     await bot.delete_webhook(drop_pending_updates=True)
+    await bot_commands.set_bot_commands(bot=Bot)
     await notify.notify_admins(bot=bot, text="Бот запущен!")
 
 
