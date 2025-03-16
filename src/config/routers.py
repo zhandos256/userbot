@@ -12,12 +12,12 @@ from handlers.users.settings import router as settings_router
 
 main_router = Router()
 
+main_router.include_router(cancel_router)
 main_router.include_router(admin_router)
 main_router.include_router(start_router)
 main_router.include_router(help_router)
-main_router.include_router(about_router)
-main_router.include_router(lang_router)
-main_router.include_router(cancel_router)
-main_router.include_router(echo_router)
 main_router.include_router(menu_router)
+main_router.include_router(about_router)
 main_router.include_router(settings_router)
+main_router.include_router(lang_router)
+main_router.include_router(echo_router)
