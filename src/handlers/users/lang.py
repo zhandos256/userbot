@@ -1,6 +1,6 @@
 from aiogram import F, Router, types
 
-from database.query import register_user, update_user_lang
+from database.queries import register_user, update_user_lang
 from keyboards.inline.lang import lang_kb
 from keyboards.inline.menu import back_menu_kb, menu_kb
 
