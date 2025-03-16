@@ -4,7 +4,7 @@ from aiogram.types import TelegramObject
 from aiogram.utils.i18n import I18n, I18nMiddleware
 
 from config.const import LOCALES_DIR, DEFAULT_LOCALE, DOMAIN_MESSAGES
-from database.query import get_user_lang
+from database.queries import get_user_lang
 
 
 class CustomI18nMiddleware(I18nMiddleware):

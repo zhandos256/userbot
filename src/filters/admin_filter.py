@@ -3,7 +3,7 @@ from typing import Union
 from aiogram import types
 from aiogram.filters import BaseFilter
 
-from database.query import get_all_users
+from database.queries import get_all_users
 
 
 class IsAdmin(BaseFilter):

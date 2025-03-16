@@ -1,7 +1,7 @@
 from aiogram import BaseMiddleware
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from database.query import update_last_action
+from database.queries import update_last_action
 
 
 class LastActionMiddleware(BaseMiddleware):
