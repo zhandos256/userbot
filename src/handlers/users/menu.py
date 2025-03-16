@@ -1,20 +1,36 @@
+from typing import Union 
+
 from aiogram import F, Router, types
 from aiogram.filters import Command
 
 from keyboards.inline.menu import menu_kb
 
 router = Router()
+
 tmp_msg = (
     "Шаблонное приветствие\n",
     "Исходники - https://github.com/zhandos256/templateaiogram\n",
 )
 
 
+async def msg_handler(upd: types.Message) -> None:
+    await upd.answer(text="\n".join(tmp_msg), reply_markup=menu_kb())
+
+
+async def callback_handler(upd: types.CallbackQuery) -> None:
+    await upd.message.edit_text(text="\n".join(tmp_msg), reply_markup=menu_kb())
+
+
+handlers = {
+    types.Message: msg_handler,
+    types.CallbackQuery: callback_handler,
+}
+
+
 @router.message(Command("menu"))
-async def menu_msg(msg: types.Message):
-    await msg.answer(text="\n".join(tmp_msg), reply_markup=menu_kb())
-
-
 @router.callback_query(F.data == "menu")
-async def menu_cb(call: types.CallbackQuery):
-    await call.message.edit_text(text="\n".join(tmp_msg), reply_markup=menu_kb())
+async def menu_handler(update: Union[types.Message, types.CallbackQuery]) -> None:
+    handler = handlers.get(type(update))
+    if handler is None:
+        return
+    await handler(update)

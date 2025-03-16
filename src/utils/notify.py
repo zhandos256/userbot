@@ -3,7 +3,7 @@ import logging
 
 from aiogram import Bot
 
-from database.query import get_all_users
+from database.queries import get_all_users
 
 
 async def notify_users_by_condition(bot: Bot, text: str, is_admin: bool):

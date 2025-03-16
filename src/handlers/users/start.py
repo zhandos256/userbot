@@ -1,7 +1,7 @@
 from aiogram import Router, types
 from aiogram.filters import CommandStart
 
-from database.query import exist_user
+from database.queries import exist_user
 from keyboards.inline.lang import start_lang_kb
 from keyboards.inline.menu import menu_kb
 
