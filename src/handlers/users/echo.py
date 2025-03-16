@@ -5,14 +5,13 @@ from keyboards.inline.menu import back_menu_kb
 
 router = Router()
 
+ECHO_MSG = (
+    "Извините, я не смог понять ваше сообщение. Используйте команду /help, чтобы увидеть доступные команды.",
+)
+
 
 @router.message()
-async def echo_msg(msg: types.Message, state: FSMContext):
+async def echo_handler(msg: types.Message, state: FSMContext):
     st = await state.get_state()
-    if st is not None:
-        pass
-    else:
-        template_msg = (
-            "Извините, я не смог понять ваше сообщение. Используйте команду /help, чтобы увидеть доступные команды.",
-        )
-        await msg.answer(text="\n".join(template_msg), reply_markup=back_menu_kb())
+    if st is None:
+        await msg.answer(text="\n".join(ECHO_MSG), reply_markup=back_menu_kb())

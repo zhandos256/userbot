@@ -7,18 +7,18 @@ from keyboards.inline.menu import menu_kb
 
 router = Router()
 
-tmp_msg = (
+MENU_MSG = (
     "Шаблонное приветствие\n",
     "Исходники - https://github.com/zhandos256/templateaiogram\n",
 )
 
 
 async def msg_handler(upd: types.Message) -> None:
-    await upd.answer(text="\n".join(tmp_msg), reply_markup=menu_kb())
+    await upd.answer(text="\n".join(MENU_MSG), reply_markup=menu_kb())
 
 
 async def callback_handler(upd: types.CallbackQuery) -> None:
-    await upd.message.edit_text(text="\n".join(tmp_msg), reply_markup=menu_kb())
+    await upd.message.edit_text(text="\n".join(MENU_MSG), reply_markup=menu_kb())
 
 
 handlers = {
