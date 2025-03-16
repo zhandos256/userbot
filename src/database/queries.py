@@ -37,7 +37,6 @@ async def register_user(
     language: str = "ru"
 ):
     async with async_session_maker() as session:
-        # Check user if existing
         result = await session.execute(select(User).filter(User.tg_userid == tg_userid))
         exist_user = result.scalar_one_or_none()
         if exist_user:
@@ -59,10 +58,10 @@ async def get_user_lang(tg_userid: int):
         return result.scalar_one_or_none()
 
 
-async def update_user_lang(tg_userid: int, value: str):
+async def update_user_lang(tg_userid: int, language: str):
     async with async_session_maker() as session:
         result = await session.execute(select(User).filter(User.tg_userid == tg_userid))
         user = result.scalar_one_or_none()
         if user:
-            user.language = value
+            user.language = language
             await session.commit()
