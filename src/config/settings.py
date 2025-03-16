@@ -6,21 +6,21 @@ from aiogram import Bot, Dispatcher
 from aiogram.enums.parse_mode import ParseMode
 
 from config.routers import main_router
-from config.const import  BOT_TOKEN, DEBUG, LOG_FILE
+from config.const import  BOT_TOKEN, DEBUG, LOG_FILE, COMMANDS
 from database.queries import async_session_maker
 from middleware.i18n_middleware import i18n_middleware
 from middleware.last_action_middleware import LastActionMiddleware
-from utils import bot_commands, notify
+from utils.notify import notify_admins
 
 
 async def on_startup(bot: Bot):
+    await bot.set_my_commands(commands=COMMANDS)
     await bot.delete_webhook(drop_pending_updates=True)
-    await bot_commands.set_bot_commands(bot=Bot)
-    await notify.notify_admins(bot=bot, text="Бот запущен!")
+    await notify_admins(bot=bot, text="Бот запущен!")
 
 
 async def on_shutdown(bot: Bot):
-    await notify.notify_admins(bot=bot, text="Бот остановлен!")
+    await notify_admins(bot=bot, text="Бот остановлен!")
 
 
 async def configure_bot():

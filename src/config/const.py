@@ -28,3 +28,10 @@ SQLITE_DB_URL = f"sqlite+aiosqlite:///{SQLITE_DB_FILE_PATH}"
 LOCALES_DIR = BASE_DIR / "locales"
 DOMAIN_MESSAGES = "messages"
 DEFAULT_LOCALE = 'ru'
+
+from aiogram.types import BotCommand
+COMMANDS = [
+    BotCommand(command="/start", description="Template start message"),
+    BotCommand(command="/help", description="Template help message"),
+    BotCommand(command="/menu", description="Template menu message"),
+]
