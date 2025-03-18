@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source ./.venv/bin/activate
-
 # Создание необходимых директорий
 mkdir -p ./src/migrations/versions ./src/locales src/logs
 
