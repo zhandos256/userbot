@@ -11,13 +11,24 @@ from handlers.users.menu import router as menu_router
 from handlers.users.settings import router as settings_router
 
 main_router = Router()
+"""Главный роутер, который объединяет все роутеры приложения."""
 
-main_router.include_router(cancel_router)
-main_router.include_router(admin_router)
-main_router.include_router(start_router)
-main_router.include_router(help_router)
-main_router.include_router(menu_router)
-main_router.include_router(about_router)
-main_router.include_router(settings_router)
-main_router.include_router(lang_router)
-main_router.include_router(echo_router)
+# Группировка роутеров
+user_routers = [
+    start_router,
+    help_router,
+    menu_router,
+    about_router,
+    settings_router,
+    lang_router,
+    cancel_router,
+    echo_router,
+]
+
+admin_routers = [
+    admin_router,
+]
+
+# Регистрация роутеров
+for router in user_routers + admin_routers:
+    main_router.include_router(router)
