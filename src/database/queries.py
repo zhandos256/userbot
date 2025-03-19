@@ -10,6 +10,7 @@ from .models import User
 from .session import async_session_maker
 
 
+# Функция обновления времени последнего действия пользователя
 async def update_last_action(tg_userid: int):
     async with async_session_maker() as session:
         await session.execute(
@@ -20,18 +21,21 @@ async def update_last_action(tg_userid: int):
         await session.commit()
 
 
+# Функция получения всех пользователей из базы данных
 async def get_all_users():
     async with async_session_maker() as session:
         result = await session.execute(select(User))
         return result.scalars().all()
 
 
+# Функция проверки существования пользователя в базе данных
 async def exist_user(tg_userid: int):
     async with async_session_maker() as session:
         result = await session.execute(select(User).filter(User.tg_userid == tg_userid))
         return result.scalar() is not None
 
 
+# Функция регистрации нового пользователя
 async def register_user(
     tg_userid: int,
     username: Optional[str] = None,
@@ -49,14 +53,16 @@ async def register_user(
         ).on_conflict_do_nothing(index_elements=['tg_userid'])
         await session.execute(stmt)
         await session.commit()
-            
 
+            
+# Функция получения языка пользователя по его tg_userid
 async def get_user_lang(tg_userid: int):
     async with async_session_maker() as session:
         result = await session.execute(select(User.language).filter(User.tg_userid == tg_userid))
         return result.scalar() or "ru"
 
 
+# Функция обновления языка пользователя
 async def update_user_lang(tg_userid: int, language: str):
     async with async_session_maker() as session:
         await session.execute(

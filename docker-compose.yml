@@ -7,11 +7,12 @@ services:
       dockerfile: Dockerfile
     container_name: bot_container
     environment:
-      - DB_TYPE=sqlite  # default db uses 'sqlite', you can change to 'postgres'
-      - BOT_TOKEN=YOUR_TOKEN  # chage your real token here
+      - DB_TYPE=sqlite
+      - BOT_TOKEN=YOUR_BOT_TOKEN
       - POSTGRES_DB_URL=postgresql+asyncpg://postgres:postgres@postgres:5432/postgres
     depends_on:
       - postgres
+    restart: always
 
   postgres:
     image: postgres:16
@@ -24,6 +25,7 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - pg_data:/var/lib/postgresql/data
+    restart: always
   
 volumes:
   pg_data:

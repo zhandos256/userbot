@@ -13,6 +13,10 @@ from handlers.users.settings import router as settings_router
 main_router = Router()
 """Главный роутер, который объединяет все роутеры приложения."""
 
+admin_routers = [
+    admin_router,
+]
+
 # Группировка роутеров
 user_routers = [
     start_router,
@@ -21,14 +25,11 @@ user_routers = [
     about_router,
     settings_router,
     lang_router,
-    cancel_router,
-    echo_router,
-]
-
-admin_routers = [
-    admin_router,
+    cancel_router,  # cancel_router должен быть всегда пред-послденим!
+    echo_router,  # echo_router должен быть всегда последним!
 ]
 
 # Регистрация роутеров
-for router in user_routers + admin_routers:
+main_router.include_router(admin_router)
+for router in user_routers:
     main_router.include_router(router)
