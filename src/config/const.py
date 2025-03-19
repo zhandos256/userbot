@@ -1,16 +1,18 @@
-from pydantic import Field
-from pydantic_settings import BaseSettings
+from enum import Enum
 from pathlib import Path
 from datetime import datetime
-from enum import Enum
+
 import pytz
+from pydantic import Field
+from pydantic_settings import BaseSettings
+
 
 class DBType(str, Enum):
     SQLITE = "sqlite"
     POSTGRES = "postgres"
 
 class Settings(BaseSettings):
-    DEBUG: bool = False
+    DEBUG: bool = True
     TIMEZONE: str = "Asia/Almaty"
     BOT_TOKEN: str = Field(..., env="BOT_TOKEN")
     BASE_DIR: Path = Path(__file__).parent.parent
@@ -27,10 +29,8 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-# Создание директории для логов
 settings.LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
-# Настройка URL базы данных
 DB_URLS = {
     DBType.SQLITE: settings.SQLITE_DB_URL,
     DBType.POSTGRES: settings.POSTGRES_DB_URL,
@@ -38,9 +38,7 @@ DB_URLS = {
 
 DATABASE_URL = DB_URLS.get(settings.DB_TYPE, settings.SQLITE_DB_URL)
 
-# Команды бота
 from aiogram.types import BotCommand
-
 def get_bot_commands() -> list[BotCommand]:
     return [
         BotCommand(command="/start", description="Template start message"),

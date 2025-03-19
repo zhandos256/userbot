@@ -1,7 +1,7 @@
-import asyncio
-import logging
-import signal
 import sys
+import signal
+import logging
+import asyncio
 from typing import Tuple
 
 from aiogram import Bot, Dispatcher
@@ -11,8 +11,8 @@ from aiogram.client.default import DefaultBotProperties
 from config.routers import main_router
 from config.const import settings, COMMANDS
 from database.queries import async_session_maker
-from middleware.i18n_middleware import i18n_middleware
-from middleware.last_action_middleware import LastActionMiddleware
+from middlewares.i18n_middleware import i18n_middleware
+from middlewares.last_action_middleware import LastActionMiddleware
 from utils.notify import notify_admins
 
 
@@ -87,7 +87,3 @@ def main() -> None:
         logging.info("Бот остановлен пользователем.")
     finally:
         loop.close()
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,5 @@
-import asyncio
 import logging
+import asyncio
 
 from aiogram import Bot
 
