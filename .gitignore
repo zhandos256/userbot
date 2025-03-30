@@ -1,54 +1,60 @@
-# Исключаем Python-кэш и артефакты
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Исключаем виртуальное окружение
-env/
-venv/
-.venv/
-
-# Исключаем файлы конфигурации окружения (если не нужно передавать внутрь контейнера)
+# Virtual Environment
 .env
-.venv
+.env.prod
+.venv/
+venv/
+ENV/
+env/
 
-# Исключаем файлы IDE и редакторов кода
-.vscode/
+# IDE
 .idea/
-*.sublime-workspace
-*.sublime-project
-*.emacs
-
-# Исключаем временные файлы
-*.tmp
-*.log
-*.bak
+.vscode/
 *.swp
 *.swo
+*.swn
+*.bak
+*.sublime-workspace
+*.sublime-project
 
-# Исключаем базы данных SQLite и временные файлы
-*.sqlite
-*.db
-
-# Исключаем системные файлы macOS и Windows
-.DS_Store
-Thumbs.db
-
-# Исключаем Docker-файлы (если они не должны быть в контейнере)
-.dockerignore
-docker-compose.override.yml
-
-# Исключаем файлы версионного контроля
-.git/
-.gitignore
-versions/
-
-# Исключаем PostgreSQL и другие данные БД (если база не должна быть в контейнере)
-pg_data/
-pg_dump.sql  # Если у тебя есть дампы базы, можно их тоже исключить
-
-# Исключаем логи и кеши проекта
+# Logs and databases
 logs/
 *.log
+*.sqlite
+*.db
+pg_data/
+pg_dump.sql
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Project specific
 cache/
+versions/
