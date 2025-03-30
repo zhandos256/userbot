@@ -4,7 +4,5 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 def cancel_kb():
     builder = InlineKeyboardBuilder()
-    builder.add(
-        InlineKeyboardButton(text="отменить операцию", callback_data="cancel")
-    )
+    builder.add(InlineKeyboardButton(text="отменить операцию", callback_data="cancel"))
     return builder.as_markup()

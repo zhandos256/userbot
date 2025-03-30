@@ -3,7 +3,7 @@ import asyncio
 
 from aiogram import Bot
 
-from database.queries import get_all_users
+from database.user_queries import get_all_users
 
 
 async def notify_users_by_condition(bot: Bot, text: str, is_admin: bool):

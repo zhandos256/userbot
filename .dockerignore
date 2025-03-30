@@ -1,3 +1,7 @@
+# Git
+.git
+.gitignore
+
 # Python
 __pycache__/
 *.py[cod]
@@ -58,3 +62,18 @@ docker-compose.override.yml
 # Project specific
 cache/
 versions/
+
+# Tests
+tests/
+test/
+pytest.ini
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+.coverage.*
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
