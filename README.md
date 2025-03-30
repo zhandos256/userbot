@@ -1,38 +1,38 @@
-# Telegram Bot Template на Aiogram 3.18.0
+# Aiogram templtae 3.18.0
 
-Современный шаблон для разработки Telegram-ботов на базе Aiogram 3.18.0. Включает в себя все необходимые компоненты для создания масштабируемых и поддерживаемых ботов.
+Modern template for development Telegram bots on based Aiogram 3.18.0. Includes all needed components for create scalable and supported bots.
 
-## 🚀 Основные возможности
+## Main features
 
-- **Фреймворк**: Aiogram 3.18.0
-- **Базы данных**:
+- **Framework**: Aiogram 3.18.0
+- **Database**:
   - PostgreSQL (asyncpg 0.30.0)
   - SQLite (aiosqlite 0.21.0)
 - **ORM**: SQLAlchemy 2.0.39
-- **Миграции**: Alembic 1.15.1
-- **Локализация**: Babel 2.17.0 (i18n)
-- **Конфигурация**: Pydantic 2.10.6
-- **Логирование**: Встроенная система с ротацией логов
-- **Docker**: Готовый конфиг для развертывания
+- **Migrations**: Alembic 1.15.1
+- **I18N**: Babel 2.17.0 (i18n)
+- **Configuration**: Pydantic 2.10.6
+- **Logging**: Main features Built-in log rotation system
+- **Docker**: Ready-made configuration for deployment
 
-## 📋 Требования
+## 📋 Requirements
 
 - Python 3.8+
 - Docker (опционально)
 - Git
 
-## 🛠 Установка и запуск
+## 🛠 Install and run
 
-### Локальный запуск
+### Local run
 
-1. Клонируйте репозиторий:
+1. Clone repository:
 
 ```bash
 git clone https://github.com/zhandos256/templateaiogram
 cd templateaiogram
 ```
 
-2. Создайте виртуальное окружение и установите зависимости:
+2. Create virtual environment and install requirements:
 
 ```bash
 python -m venv venv
@@ -42,7 +42,7 @@ venv\Scripts\activate  # для Windows
 pip install -r requirements.txt
 ```
 
-3. Создайте файл `.env` и настройте переменные окружения:
+3. Create file `.env` and configure the environment variables:
 
 ```env
 BOT_TOKEN=your_bot_token
@@ -52,21 +52,21 @@ DEBUG=True  # режим отладки
 TIMEZONE=Asia/Almaty  # часовой пояс
 ```
 
-4. Запустите миграции:
+4. Start migrations:
 
 ```bash
 alembic upgrade head
 ```
 
-5. Запустите бота:
+5. Start bot:
 
 ```bash
 python src/main.py
 ```
 
-### Запуск через Docker
+### Start via docker
 
-1. Создайте файл `.env` на основе примера выше и настройте переменные окружения:
+1. Create file `.env` based on the example above, set up the environment variables:
 
 ```env
 # Bot settings
@@ -85,91 +85,91 @@ POSTGRES_PASSWORD=postgres
 POSTGRES_DB=postgres
 ```
 
-2. Соберите и запустите контейнеры:
+2. Build and start container:
 
 ```bash
 docker-compose build
 docker-compose up
 ```
 
-> **Примечание**: Все настройки теперь берутся из файла `.env`. Это позволяет легко менять конфигурацию без изменения `docker-compose.yml`.
+> **Note**: All settings are now taken from the file `.env`. This makes it easy to change the configuration without changing the `docker-compose.yml'.
 
-## 🌍 Локализация
+## 🌍 Localization
 
-### Добавление нового языка
+### Add new language
 
-1. Извлеките строки для перевода:
+1. Extract the translation strings:
 
 ```bash
 pybabel extract --input-dirs=. -o locales/messages.pot
 ```
 
-2. Создайте новый файл перевода:
+2. Create a new translation file:
 
 ```bash
 pybabel init -i locales/messages.pot -d locales -D messages -l kk
 ```
 
-3. Отредактируйте файл `locales/kk/LC_MESSAGES/messages.po`
+3. Edit the file `locales/kk/LC_MESSAGES/messages.po`
 
-4. Скомпилируйте переводы:
+4. Compile the translations:
 
 ```bash
 pybabel compile -d locales -D messages
 ```
 
-## 📁 Структура проекта
+## 📁 Project structure
 
 ```text
 src/
-├── config/           # Конфигурация приложения
-├── database/         # Работа с базой данных
-├── filters/          # Пользовательские фильтры
-├── handlers/         # Обработчики команд
-├── keyboards/        # Клавиатуры
-├── locales/         # Файлы локализации
-├── middleware/      # Middleware
-├── services/        # Бизнес-логика
-└── utils/           # Вспомогательные функции
+├── config/           # App configuration
+├── database/         # Work with database
+├── filters/          # Custom Filters
+├── handlers/         # Handlers
+├── keyboards/        # Keyboards
+├── locales/         # Localization files
+├── middleware/      # Middlewares
+├── services/        # Business logic
+└── utils/           # Auxiliary functions
 ```
 
-## 🔧 Настройка
+## 🔧 Settings
 
-### База данных
+### Database
 
-- По умолчанию используется SQLite
-- Для PostgreSQL измените `DB_TYPE=postgres` в `.env`
-- URL базы данных PostgreSQL: `postgresql+asyncpg://postgres:postgres@localhost:5432/postgres`
+- By default used Sqlite database
+- For use PostgreSQL change `DB_TYPE=postgres` in `.env` file
+- Database URL PostgreSQL: `postgresql+asyncpg://postgres:postgres@localhost:5432/postgres`
 
-### Логирование
+### Logging
 
-- Логи сохраняются в директории `logs/`
-- Формат: `YYYY-MM-DD.log`
-- Режим отладки: `DEBUG=True` в `.env`
+- Logs are saved in the directory `logs/`
+- Log format: `YYYY-MM-DD.log`
+- Debugging mode: `DEBUG=True` в `.env`
 
-### Локализация
+### Localization
 
-- По умолчанию: русский язык
-- Файлы переводов: `locales/`
-- Домен сообщений: `messages`
+- By default: russioan language
+- Translation files: `locales/`
+- Message domain: `messages`
 
-### Дополнительные настройки
+### Additional settings
 
-- Часовой пояс: `TIMEZONE=Asia/Almaty`
-- Таймаут поллинга: `POLLING_TIMEOUT=5`
-- Режим отладки: `DEBUG=True`
+- Time zone: `TIMEZONE=Asia/Almaty`
+- Polling timeout: `POLLING_TIMEOUT=5`
+- Debbuging mode: `DEBUG=True`
 
-## 🔧 Настройка окружения
+## 🔧 Setting up the environment
 
-### Разработка
+### Development
 
-1. Скопируйте `.env.example` в `.env`:
+1. Copy `.env.example` to `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-2. Настройте переменные окружения в `.env`:
+2. Set up environment variables in `.env`:
 
 ```env
 BOT_TOKEN=your_bot_token
@@ -179,9 +179,9 @@ POLLING_TIMEOUT=5
 DB_TYPE=sqlite  # или postgres
 ```
 
-### Продакшен
+### Production
 
-1. Создайте файл `.env.prod` с продакшен-настройками:
+1. Create file `.env.prod` with production settings:
 
 ```env
 BOT_TOKEN=your_bot_token
@@ -195,19 +195,19 @@ POSTGRES_PASSWORD=your_strong_password_here
 POSTGRES_DB=postgres
 ```
 
-2. Запустите с продакшен-конфигурацией:
+2. Start with production configuration:
 
 ```bash
 docker-compose --env-file .env.prod up -d
 ```
 
-> **Важно**:
+> **Important**:
 >
-> - `.env` и `.env.prod` файлы не должны попадать в репозиторий
-> - Добавьте их в `.gitignore`
-> - Храните `.env.prod` в безопасном месте
-> - Используйте разные токены и пароли для разработки и продакшена
+> - `.env` and `.env.prod` files don't should be in repository
+> - Add them to `.gitignore`
+> - Keep `.env.prod` in a safe place
+> - Use different tokens and passwords for development and production
 
-## 📝 Лицензия
+## 📝 License
 
 MIT License
