@@ -2,7 +2,7 @@ from aiogram.types import User as AiogramUser
 from aiogram import BaseMiddleware
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from database.queries import update_last_action
+from database.user_queries import update_last_action
 
 
 class LastActionMiddleware(BaseMiddleware):

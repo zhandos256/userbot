@@ -3,8 +3,8 @@ from typing import Any, Dict
 from aiogram.types import TelegramObject, User as AiogramUser
 from aiogram.utils.i18n import I18n, I18nMiddleware
 
-from config.const import settings
-from database.queries import get_user_lang
+from config.user_settings import settings
+from database.user_queries import get_user_lang
 
 
 class CustomI18nMiddleware(I18nMiddleware):
