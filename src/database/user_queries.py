@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import List
 from datetime import datetime
 
 import pytz
@@ -6,7 +6,7 @@ from sqlalchemy import select, update
 from sqlalchemy.dialects.postgresql import insert
 
 from config.user_settings import settings
-from .models import User
+from .models import User, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_USERNAME, DEFAULT_LANGUAGE, DEFAULT_IS_ADMIN
 from .session import async_session_maker
 
 
@@ -55,10 +55,10 @@ async def exist_user(tg_userid: int) -> bool:
 
 async def register_user(
     tg_userid: int,
-    username: Optional[str] = None,
-    first_name: Optional[str] = None,
-    last_name: Optional[str] = None,
-    language: str = settings.DEFAULT_LANGUAGE
+    username: str = DEFAULT_USERNAME,
+    first_name: str = DEFAULT_FIRST_NAME,
+    last_name: str = DEFAULT_LAST_NAME,
+    language: str = DEFAULT_LANGUAGE
 ) -> None:
     """
     Регистрирует нового пользователя в базе данных.
@@ -73,10 +73,10 @@ async def register_user(
     async with async_session_maker() as session:
         stmt = insert(User).values(
             tg_userid=tg_userid,
-            username=username or settings.DEFAULT_USERNAME,
-            first_name=first_name or settings.DEFAULT_FIRST_NAME,
-            last_name=last_name or settings.DEFAULT_LAST_NAME,
-            language=language or settings.DEFAULT_LANGUAGE
+            username=username or DEFAULT_USERNAME,
+            first_name=first_name or DEFAULT_FIRST_NAME,
+            last_name=last_name or DEFAULT_LAST_NAME,
+            language=language or DEFAULT_LANGUAGE,
         ).on_conflict_do_nothing(index_elements=['tg_userid'])
         await session.execute(stmt)
         await session.commit()
@@ -94,7 +94,7 @@ async def get_user_lang(tg_userid: int) -> str:
     """
     async with async_session_maker() as session:
         result = await session.execute(select(User.language).filter(User.tg_userid == tg_userid))
-        return result.scalar() or "ru"
+        return result.scalar() or DEFAULT_LANGUAGE
 
 
 async def update_user_lang(tg_userid: int, language: str) -> None:
