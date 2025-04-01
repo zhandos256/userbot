@@ -10,7 +10,7 @@ Modern template for development Telegram bots on based Aiogram 3.18.0. Includes 
   - SQLite (aiosqlite 0.21.0)
 - **ORM**: SQLAlchemy 2.0.39
 - **Migrations**: Alembic 1.15.1
-- **I18N**: Babel 2.17.0 (i18n)
+- **Localization**: Babel 2.17.0 (i18n)
 - **Configuration**: Pydantic 2.10.6
 - **Logging**: Main features Built-in log rotation system
 - **Docker**: Ready-made configuration for deployment
