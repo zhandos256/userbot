@@ -48,14 +48,14 @@ async def initialize_bot_and_dispatcher() -> Tuple[Bot, Dispatcher]:
     )
     dp = Dispatcher()
     
-    # Регистрация роутера
+    # Register routers
     dp.include_router(main_router)
     
-    # Регистрация обработчиков событий
+    # Register handlers
     dp.startup.register(notify_startup)
     dp.shutdown.register(notify_shutdown)
     
-    # Регистрация middleware
+    # Register middlwares
     dp.update.middleware.register(LastActionMiddleware(async_session_maker))
     dp.update.middleware.register(i18n_middleware)
     
@@ -63,7 +63,7 @@ async def initialize_bot_and_dispatcher() -> Tuple[Bot, Dispatcher]:
 
 
 async def run_bot() -> None:
-    """Запускает бота и обрабатывает исключения."""
+    """Run bot and handle exceptions"""
     bot: Optional[Bot] = None
     dp: Optional[Dispatcher] = None
     
@@ -82,16 +82,16 @@ async def run_bot() -> None:
 
 
 def main() -> None:
-    """Основная функция для запуска бота."""
+    """Main execute bot command"""
     setup_logging()
     loop = asyncio.get_event_loop()
     
     try:
-        # Регистрация обработчиков сигналов
+        # Register signals
         loop.add_signal_handler(signal.SIGINT, lambda: loop.stop())
         loop.add_signal_handler(signal.SIGTERM, lambda: loop.stop())
         
-        # Запуск бота
+        # Run bots
         loop.run_until_complete(run_bot())
     except KeyboardInterrupt:
         logging.info("Бот остановлен пользователем.")
