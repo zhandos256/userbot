@@ -5,8 +5,8 @@ import pytz
 from sqlalchemy import select, update
 from sqlalchemy.dialects.postgresql import insert
 
-from config.user_settings import settings
-from .models import User, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_USERNAME, DEFAULT_LANGUAGE, DEFAULT_IS_ADMIN
+from config.user_settings import TIMEZONE
+from .models import User, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_USERNAME, DEFAULT_LANGUAGE
 from .session import async_session_maker
 
 
@@ -21,7 +21,7 @@ async def update_last_action(tg_userid: int) -> None:
         await session.execute(
             update(User)
             .where(User.tg_userid == tg_userid)
-            .values(last_action=datetime.now(pytz.timezone(settings.TIMEZONE)))
+            .values(last_action=datetime.now(pytz.timezone(TIMEZONE)))
         )
         await session.commit()
 
