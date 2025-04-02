@@ -5,7 +5,7 @@ import pytz
 from sqlalchemy import BigInteger, Boolean, DateTime, Integer, String, Index
 from sqlalchemy.orm import Mapped, DeclarativeBase, mapped_column
 
-from config.user_settings import settings
+from config.user_settings import TIMEZONE
 
 
 # Константы для значений по умолчанию
@@ -51,7 +51,7 @@ class User(Base):
     )
     created: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=lambda: datetime.now(pytz.timezone(settings.TIMEZONE)),
+        default=lambda: datetime.now(pytz.timezone(TIMEZONE)),
         nullable=False,
         doc="Дата и время создания записи"
     )
@@ -94,7 +94,7 @@ class User(Base):
     )
     last_action: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=lambda: datetime.now(pytz.timezone(settings.TIMEZONE)),
+        default=lambda: datetime.now(pytz.timezone(TIMEZONE)),
         nullable=False,
         doc="Дата и время последнего действия пользователя"
     )

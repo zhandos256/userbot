@@ -9,7 +9,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.exceptions import TelegramAPIError
 
 from config.routers import main_router
-from config.user_settings import settings
+from config.user_settings import settings, POLLING_TIMEOUT
 from config.logger import setup_logging
 from database.session import async_session_maker
 from middlewares.i18n_middleware import i18n_middleware
@@ -43,7 +43,7 @@ async def notify_shutdown(bot: Bot) -> None:
 async def initialize_bot_and_dispatcher() -> Tuple[Bot, Dispatcher]:
     """Инициализирует бота и диспетчер, регистрирует middleware и роутеры."""
     bot = Bot(
-        token=settings.BOT_TOKEN.get_secret_value(),
+        token=settings.bot_token.get_secret_value(),
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
     dp = Dispatcher()
@@ -69,7 +69,7 @@ async def run_bot() -> None:
     
     try:
         bot, dp = await initialize_bot_and_dispatcher()
-        await dp.start_polling(bot, polling_timeout=settings.POLLING_TIMEOUT)
+        await dp.start_polling(bot, polling_timeout=POLLING_TIMEOUT)
     except TelegramAPIError as e:
         logging.error(f"Ошибка Telegram API при работе бота: {e}")
     except Exception as e:

@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Final
 from pathlib import Path
 from datetime import datetime
 
@@ -6,62 +7,66 @@ import pytz
 from pydantic import SecretStr, Field
 from pydantic_settings import BaseSettings
 
+# Main paths
+BASE_DIR: Final[Path] = Path(__file__).parent.parent
+LOGS_DIR: Final[Path] = BASE_DIR / "logs"
+LOCALES_DIR: Final[Path] = BASE_DIR / "locales"
+SQLITE_DB_FILE: Final[Path] = BASE_DIR / "db.sqlite"
+
+# Const
+TIMEZONE: Final[str] = "Asia/Almaty"
+POLLING_TIMEOUT: Final[int] = 5
+DEFAULT_SQLITE_URL: Final[str] = f"sqlite+aiosqlite:///{SQLITE_DB_FILE}"
+DEFAULT_POSTGRES_URL: Final[str] = "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres"
+
 
 class DBType(str, Enum):
     SQLITE = "sqlite"
     POSTGRES = "postgres"
 
 
-def generate_log_file() -> Path:
-    """
-    Генерирует путь к лог-файлу на основе текущей даты.
-
-    Returns:
-        Path: Путь к файлу логов
-    """
-    date_str = datetime.now(pytz.timezone(settings.TIMEZONE)).strftime("%Y-%m-%d")
-    return settings.LOGS_DIR / f"{date_str}.log"
+def generate_log_file(logs_dir: Path = LOGS_DIR) -> Path:
+    """Generate log file path based on current date."""
+    tz = pytz.timezone(TIMEZONE)
+    date_str = datetime.now(tz).strftime("%Y-%m-%d")
+    return logs_dir / f"{date_str}.log"
 
 
 class Settings(BaseSettings):
-    # Основные настройки
-    DEBUG: bool = True
-    TIMEZONE: str = "Asia/Almaty"
-    BOT_TOKEN: SecretStr = Field(..., env="BOT_TOKEN")
-    POLLING_TIMEOUT: int = 5
+    # Режим отладки
+    debug: bool = True
 
-    # Пути к директориям
-    BASE_DIR: Path = Path(__file__).parent.parent
-    LOGS_DIR: Path = BASE_DIR / "logs"
-    LOCALES_DIR: Path = BASE_DIR / "locales"
+    # Конфиденциальные настройки
+    bot_token: SecretStr = Field(..., env="BOT_TOKEN")
+    postgres_db_url: SecretStr = Field(default=DEFAULT_POSTGRES_URL, env="POSTGRES_DB_URL")
 
     # Настройки базы данных
-    DB_TYPE: DBType = Field(default=DBType.SQLITE, env="DB_TYPE")
-    SQLITE_DB_FILE_PATH: Path = BASE_DIR / "db.sqlite"
-    SQLITE_DB_URL: str = f"sqlite+aiosqlite:///{SQLITE_DB_FILE_PATH}"
-    POSTGRES_DB_URL: str = Field(
-        default="postgresql+asyncpg://postgres:postgres@localhost:5432/postgres",
-        env="POSTGRES_DB_URL"
-    )
+    db_type: DBType = Field(default=DBType.SQLITE, env="DB_TYPE")
 
-    # Настройки локализации
-    DOMAIN_MESSAGES: str = "messages"
-    DEFAULT_LOCALE: str = "ru"
+    # Локализация
+    domain_messages: str = "messages"
+    default_locale: str = "ru"
 
-    # Путь к файлу логов
-    LOG_FILE: Path = Field(default_factory=generate_log_file)
+    # Логирование
+    log_file: Path = Field(default_factory=generate_log_file)
 
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
+        case_sensitive = False  # Добавлено для гибкости
 
 
+# Инициализация настроек
 settings = Settings()
-settings.LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
-DB_URLS = {
-    DBType.SQLITE: settings.SQLITE_DB_URL,
-    DBType.POSTGRES: settings.POSTGRES_DB_URL,
+# Создание директории логов (выполняется один раз при импорте)
+LOGS_DIR.mkdir(parents=True, exist_ok=True)
+
+# Словарь URL баз данных
+DB_URLS: Final[dict[DBType, str]] = {
+    DBType.SQLITE: DEFAULT_SQLITE_URL,
+    DBType.POSTGRES: settings.postgres_db_url.get_secret_value(),
 }
 
-DATABASE_URL = DB_URLS.get(settings.DB_TYPE, settings.SQLITE_DB_URL)
+# URL текущей базы данных
+DATABASE_URL: Final[str] = DB_URLS[settings.db_type]
