@@ -1,7 +1,7 @@
 from typing import Any, Dict
 
-from aiogram.types import TelegramObject, User as AiogramUser
 from aiogram.utils.i18n import I18n, I18nMiddleware
+from aiogram.types import TelegramObject, User as AiogramUser
 
 from config.user_settings import settings, LOCALES_DIR
 from database.user_queries import get_user_lang

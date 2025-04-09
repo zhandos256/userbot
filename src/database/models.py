@@ -1,5 +1,5 @@
-from datetime import datetime
 from typing import Optional
+from datetime import datetime
 
 import pytz
 from sqlalchemy import BigInteger, Boolean, DateTime, Integer, String, Index

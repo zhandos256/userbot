@@ -1,5 +1,5 @@
-from aiogram.types import User as AiogramUser
 from aiogram import BaseMiddleware
+from aiogram.types import User as AiogramUser
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from database.user_queries import update_last_action

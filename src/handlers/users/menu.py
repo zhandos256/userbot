@@ -1,7 +1,7 @@
 from typing import Union 
 
-from aiogram import F, Router, types
 from aiogram.filters import Command
+from aiogram import F, Router, types
 
 from keyboards.inline.menu import menu_kb
 
