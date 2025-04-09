@@ -6,8 +6,8 @@ from sqlalchemy import select, update
 from sqlalchemy.dialects.postgresql import insert
 
 from config.user_settings import TIMEZONE
-from .models import User, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_USERNAME, DEFAULT_LANGUAGE
 from .session import async_session_maker
+from .models import User, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_USERNAME, DEFAULT_LANGUAGE
 
 
 async def update_last_action(tg_userid: int) -> None:

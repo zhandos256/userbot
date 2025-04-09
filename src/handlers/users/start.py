@@ -2,8 +2,8 @@ from aiogram import Router, types
 from aiogram.filters import CommandStart
 
 from database.user_queries import exist_user
-from keyboards.inline.lang import start_lang_kb
 from keyboards.inline.menu import menu_kb
+from keyboards.inline.lang import start_lang_kb
 
 router = Router()
 
