@@ -11,7 +11,6 @@ from handlers.users.menu import router as menu_router
 from handlers.users.settings import router as settings_router
 
 main_router = Router()
-"""Главный роутер, который объединяет все роутеры приложения."""
 
 admin_routers = [
     admin_router,

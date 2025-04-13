@@ -32,15 +32,5 @@ else
     alembic upgrade head || error_exit "Не удалось применить миграцию"
 fi
 
-# Проверка наличия файла main.py
-if [ ! -f "main.py" ]; then
-    error_exit "Файл main.py не найден"
-fi
-
-# Проверка наличия переменных окружения
-if [ -z "$BOT_TOKEN" ]; then
-    error_exit "Переменная окружения BOT_TOKEN не установлена"
-fi
-
 echo "Запуск бота..."
 python main.py || error_exit "Ошибка при запуске бота"

@@ -1,3 +1,5 @@
+import textwrap
+
 from aiogram import F, Router, types
 
 from keyboards.inline.lang import lang_kb
@@ -33,8 +35,11 @@ async def update_lang_start(call: types.CallbackQuery):
         last_name=call.from_user.last_name,
         language=lang
     )
-    temp_msg = (
-        "Шаблонное приветствие\n",
-        "Исходники - https://github.com/zhandos256/templateaiogram\n",
+    temp_msg = textwrap.dedent(
+        """
+        Шаблонное приветствие
+
+        Исходники - https://github.com/zhandos256/templateaiogram
+        """
     )
-    await call.message.edit_text(text="\n".join(temp_msg), reply_markup=menu_kb())
+    await call.message.edit_text(text=temp_msg, reply_markup=menu_kb())
