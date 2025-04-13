@@ -3,7 +3,6 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 
 from config.user_settings import DATABASE_URL, settings
 
-
 # Константы для конфигурации пула соединений
 POOL_SIZE = 5
 MAX_OVERFLOW = 10

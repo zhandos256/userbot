@@ -1,3 +1,4 @@
+import textwrap
 from typing import Union 
 
 from aiogram.filters import Command
@@ -7,18 +8,22 @@ from keyboards.inline.menu import menu_kb
 
 router = Router()
 
-MENU_MSG = (
-    "Шаблонное приветствие\n",
-    "Исходники - https://github.com/zhandos256/templateaiogram\n",
+MENU_MSG = textwrap.dedent(
+    """
+    Шаблонное приветствие
+
+    Исходники - https://github.com/zhandos256/templateaiogram
+    """
 )
 
 
+
 async def msg_handler(upd: types.Message) -> None:
-    await upd.answer(text="\n".join(MENU_MSG), reply_markup=menu_kb())
+    await upd.answer(text=MENU_MSG, reply_markup=menu_kb())
 
 
 async def callback_handler(upd: types.CallbackQuery) -> None:
-    await upd.message.edit_text(text="\n".join(MENU_MSG), reply_markup=menu_kb())
+    await upd.message.edit_text(text=MENU_MSG, reply_markup=menu_kb())
 
 
 handlers = {

@@ -1,3 +1,5 @@
+import textwrap
+
 from aiogram import Router, types
 from aiogram.filters import CommandStart
 
@@ -14,8 +16,11 @@ async def start_handler(msg: types.Message):
     if not user:
         await msg.answer(text='Выберите язык интерфейса', reply_markup=start_lang_kb())
     else:
-        start_msg = [
-            "Шаблонное приветствие\n",
-            "Исходники - https://github.com/zhandos256/templateaiogram\n",
-        ]
-        await msg.answer(text="\n".join(start_msg), reply_markup=menu_kb())
+        start_msg = textwrap.dedent(
+            """
+            Шаблонное приветствие
+
+            Исходники - https://github.com/zhandos256/templateaiogram
+            """
+        )
+        await msg.answer(text=start_msg, reply_markup=menu_kb())
