@@ -33,4 +33,4 @@ else
 fi
 
 echo "Запуск бота..."
-python main.py || error_exit "Ошибка при запуске бота"
+python main.py || error_exit "Ошибка при запуске бота"]
