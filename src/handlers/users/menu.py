@@ -17,7 +17,6 @@ MENU_MSG = textwrap.dedent(
 )
 
 
-
 async def msg_handler(upd: types.Message) -> None:
     await upd.answer(text=MENU_MSG, reply_markup=menu_kb())
 
