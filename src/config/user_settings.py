@@ -1,3 +1,4 @@
+import os
 from enum import Enum
 from typing import Final
 from pathlib import Path
@@ -7,17 +8,15 @@ import pytz
 from pydantic import SecretStr, Field
 from pydantic_settings import BaseSettings
 
-# Main paths
 BASE_DIR: Final[Path] = Path(__file__).parent.parent
 LOGS_DIR: Final[Path] = BASE_DIR / "logs"
 LOCALES_DIR: Final[Path] = BASE_DIR / "locales"
 SQLITE_DB_FILE: Final[Path] = BASE_DIR / "db.sqlite"
 
-# Const
 TIMEZONE: Final[str] = "Asia/Almaty"
 POLLING_TIMEOUT: Final[int] = 5
-DEFAULT_SQLITE_URL: Final[str] = f"sqlite+aiosqlite:///{SQLITE_DB_FILE}"
-DEFAULT_POSTGRES_URL: Final[str] = "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres"
+SQLITE_URL: Final[str] = f"sqlite+aiosqlite:///{SQLITE_DB_FILE}"
+POSTGRES_URL: Final[str] = os.getenv("POSTGRES_DB_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres")
 
 
 class DBType(str, Enum):
@@ -38,7 +37,6 @@ class Settings(BaseSettings):
 
     # Конфиденциальные настройки
     bot_token: SecretStr = Field(..., env="BOT_TOKEN")
-    postgres_db_url: SecretStr = Field(default=DEFAULT_POSTGRES_URL, env="POSTGRES_DB_URL")
 
     # Настройки базы данных
     db_type: DBType = Field(default=DBType.SQLITE, env="DB_TYPE")
@@ -64,8 +62,8 @@ LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Словарь URL баз данных
 DB_URLS: Final[dict[DBType, str]] = {
-    DBType.SQLITE: DEFAULT_SQLITE_URL,
-    DBType.POSTGRES: settings.postgres_db_url.get_secret_value(),
+    DBType.SQLITE: SQLITE_URL,
+    DBType.POSTGRES: POSTGRES_URL,
 }
 
 # URL текущей базы данных
