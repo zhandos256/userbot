@@ -47,18 +47,14 @@ async def initialize_bot_and_dispatcher() -> Tuple[Bot, Dispatcher]:
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
     dp = Dispatcher()
-    
     # Register routers
     dp.include_router(main_router)
-    
     # Register handlers
     dp.startup.register(notify_startup)
     dp.shutdown.register(notify_shutdown)
-    
     # Register middlwares
     dp.update.middleware.register(LastActionMiddleware(async_session_maker))
     dp.update.middleware.register(i18n_middleware)
-    
     return bot, dp
 
 
@@ -66,7 +62,6 @@ async def run_bot() -> None:
     """Run bot and handle exceptions"""
     bot: Optional[Bot] = None
     dp: Optional[Dispatcher] = None
-    
     try:
         bot, dp = await initialize_bot_and_dispatcher()
         await dp.start_polling(bot, polling_timeout=POLLING_TIMEOUT)
