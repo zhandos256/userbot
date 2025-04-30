@@ -49,7 +49,6 @@ BOT_TOKEN=your_bot_token
 DB_TYPE=sqlite  # или postgres
 POSTGRES_DB_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/postgres  # если используете PostgreSQL
 DEBUG=True  # режим отладки
-TIMEZONE=Asia/Almaty  # часовой пояс
 ```
 
 4. Start migrations:
@@ -72,8 +71,6 @@ python src/main.py
 # Bot settings
 BOT_TOKEN=your_bot_token
 DEBUG=True
-TIMEZONE=Asia/Almaty
-POLLING_TIMEOUT=5
 
 # Database settings
 DB_TYPE=sqlite  # или postgres
@@ -152,12 +149,6 @@ src/
 - By default: russioan language
 - Translation files: `locales/`
 - Message domain: `messages`
-
-### Additional settings
-
-- Time zone: `TIMEZONE=Asia/Almaty`
-- Polling timeout: `POLLING_TIMEOUT=5`
-- Debbuging mode: `DEBUG=True`
 
 ## 🔧 Setting up the environment
 
