@@ -80,12 +80,10 @@ def main() -> None:
     """Main execute bot command"""
     setup_logging()
     loop = asyncio.get_event_loop()
-    
     try:
         # Register signals
         loop.add_signal_handler(signal.SIGINT, lambda: loop.stop())
         loop.add_signal_handler(signal.SIGTERM, lambda: loop.stop())
-        
         # Run bots
         loop.run_until_complete(run_bot())
     except KeyboardInterrupt:
