@@ -24,8 +24,8 @@ user_routers = [
     about_router,
     settings_router,
     lang_router,
-    cancel_router,  # cancel_router должен быть всегда пред-послденим!
-    echo_router,  # echo_router должен быть всегда последним!
+    cancel_router,  # cancel_router must come before the last
+    echo_router,  # echo_router should be the last one
 ]
 
 # Регистрация роутеров
