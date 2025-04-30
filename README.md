@@ -165,39 +165,19 @@ cp .env.example .env
 ```env
 BOT_TOKEN=your_bot_token
 DEBUG=True
-TIMEZONE=Asia/Almaty
-POLLING_TIMEOUT=5
-DB_TYPE=sqlite  # или postgres
+DB_TYPE=sqlite  # or postgres
 ```
 
-### Production
-
-1. Create file `.env.prod` with production settings:
-
-```env
-BOT_TOKEN=your_bot_token
-DEBUG=False
-TIMEZONE=Asia/Almaty
-POLLING_TIMEOUT=30
-DB_TYPE=postgres
-POSTGRES_DB_URL=postgresql+asyncpg://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=your_strong_password_here
-POSTGRES_DB=postgres
-```
-
-2. Start with production configuration:
+3. Start with ```.env``` configuration:
 
 ```bash
-docker-compose --env-file .env.prod up -d
+docker-compose --env-file .env up -d
 ```
 
 > **Important**:
 >
-> - `.env` and `.env.prod` files don't should be in repository
+> - `.env` files don't should be in repository
 > - Add them to `.gitignore`
-> - Keep `.env.prod` in a safe place
-> - Use different tokens and passwords for development and production
 
 ## 📝 License
 
